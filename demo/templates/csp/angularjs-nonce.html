@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <meta http-equiv=content-security-policy content="object-src 'none'; script-src 'nonce-random' https: http:">
+    <script nonce={{gen_random()}} src="{{ url_for('static', filename='angular-1.6.1/angular.min.js') }}"></script>
+  </head>
+  <body>
+     <div>Try to attack Nonce-based CSP with random nonce with gadgets in AngularJS 1.6.1</div>
+     <br>
+     {{ inj|safe }}
+  </body>
+</html>

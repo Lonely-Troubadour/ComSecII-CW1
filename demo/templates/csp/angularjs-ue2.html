@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <meta http-equiv=content-security-policy content="object-src 'none'; script-src http://localhost:5000{{ url_for('static', filename='angular-1.6.1/angular.min.js') }} 'unsafe-eval';">
+    <script src="{{ url_for('static', filename='angular-1.6.1/angular.min.js') }}"></script>
+  </head>
+  <body>
+     <div>Try to attack Whitelist-based CSP which allows resources from the current origin but enables `unsafe-eval with gadgets in AngularJS 1.6.1</div>
+     {{ inj|safe }}
+  </body>
+</html>
