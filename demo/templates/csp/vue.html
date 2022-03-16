@@ -1,13 +1,14 @@
-<meta http-equiv=content-security-policy content="script-src 'nonce-random' 'strict-dynamic' 'unsafe-eval' https://unpkg.com/; default-src 'none'">
+{% set rand = gen_random() %}
+<meta http-equiv=content-security-policy content="script-src 'nonce-{{rand}}' 'strict-dynamic' 'unsafe-eval' https://unpkg.com/; default-src 'none'">
 
-<script nonce="random" src="{{ url_for('static', filename='vue.js') }}"></script>
+<script nonce="{{rand}}" src="{{ url_for('static', filename='vue.js') }}"></script>
 
 {{ inj|safe }}
 
 <div id="app-4">
- Hi
+ Hi, this is vue with nonce and strict-dynamic enabled
 </div>
-<script nonce="random">
+<script nonce="{{rand}}">
 var app4 = new Vue({
   el: '#app-4',
   data: {}

